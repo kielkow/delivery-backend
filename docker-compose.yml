@@ -3,6 +3,7 @@ version: '3'
 services:
   database:
     image: 'bitnami/postgresql'
+    container_name: delivery-backend-database
     ports:
       - '5432:5432'
     environment:
@@ -11,6 +12,19 @@ services:
       - POSTGRESQL_DATABASE=app
     volumes:
       - 'postgresql_data:/bitnami/postgresql'
+  
+  app:
+    build: .
+    container_name: delivery-backend-server
+    restart: always
+    ports: 
+      - 3000:3000
+    volumes: 
+      - .:/usr/app
+    links: 
+      - database
+    depends_on:
+      - database
 
 volumes:
   postgresql_data:
