@@ -7,10 +7,4 @@ app.use(express.json());
 
 app.use(routes);
 
-app.get('/', (request, response) => {
-    return response.json({
-        message: 'delivery-backend server is running'
-    });
-});
-
 app.listen(3000, () => console.log('server is running'));

@@ -8,6 +8,12 @@ const routes = Router();
 const createClientController = new CreateClientController();
 const authenticateClientController = new AuthenticateClientController();
 
+routes.get('/', (request, response) => {
+    return response.json({
+        message: 'delivery-backend server is running'
+    });
+});
+
 routes.post('/clients', createClientController.handle);
 routes.post('/auth', authenticateClientController.handle);
 
