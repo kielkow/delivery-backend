@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import AppError from "../../../../AppError";
 import { AuthenticateClientUseCase } from "./authenticateClientUseCase";
 
 export class AuthenticateClientController {
