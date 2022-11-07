@@ -2,6 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 import AppError from "../AppError";
 
+interface IPayload {
+    sub: string;
+}
+
 export async function ensureAuthenticateClient(request: Request, response: Response, next: NextFunction) {
     const authHeader = request.headers.authorization;
 
@@ -12,9 +16,9 @@ export async function ensureAuthenticateClient(request: Request, response: Respo
     const [, token] = authHeader.split(" ");
 
     try {
-        const { sub } = verify(token, 'b5486dcaf4cfc9c002f86209802ba582');
+        const { sub } = verify(token, 'b5486dcaf4cfc9c002f86209802ba582') as IPayload;
 
-        console.log(sub);
+        request.id_client = sub;
 
         return next();
     } catch (error) {
