@@ -10,6 +10,7 @@ import { FindAllClientDeliveriesController } from "./modules/clients/useCases/fi
 import { CreateDeliveryController } from "./modules/deliveries/useCases/createDelivery/createDeliveryController";
 import { FindAllWithoutEndDateController } from "./modules/deliveries/useCases/findAllWithoutEndDate/findAllWithoutEndDateController";
 import { UpdateDeliverymanController } from "./modules/deliveries/useCases/updateDeliveryman/updateDeliverymanController";
+import { UpdateEndDateController } from "./modules/deliveries/useCases/updateEndDate/updateEndDateController";
 import { CreateDeliverymanController } from "./modules/deliveryman/useCases/createDeliveryman/createDeliverymanController";
 import { FindAllDeliverymanDeliveriesController } from "./modules/deliveryman/useCases/findAllDeliverymanDeliveries/findAllDeliverymanDeliveriesController";
 
@@ -28,6 +29,7 @@ const findAllDeliverymanDeliveriesController = new FindAllDeliverymanDeliveriesC
 // Deliveries
 const createDeliveryController = new CreateDeliveryController();
 const updateDeliverymanController = new UpdateDeliverymanController();
+const updateEndDateController = new UpdateEndDateController();
 const findAllWithoutEndDateController = new FindAllWithoutEndDateController();
 
 // Test server
@@ -66,6 +68,11 @@ routes.put(
     '/deliveries/updateDeliveryman/:id_delivery',
     ensureAuthenticateDeliveryman,
     updateDeliverymanController.handle
+);
+routes.put(
+    '/deliveries/updateEndDate/:id_delivery',
+    ensureAuthenticateDeliveryman,
+    updateEndDateController.handle
 );
 
 export { routes };
