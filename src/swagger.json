@@ -1,0 +1,216 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Delivery Backend Documentation",
+        "description": "This is an API to Delivery APP",
+        "version": "1.0.0",
+        "contact": {
+            "email": "matheus.kielowski@gmail.com"
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "BearerAuth": []
+        }
+    ],
+    "paths": {
+        "/clients/auth": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Authenticate client",
+                "description": "Authenticate a client",
+                "security": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Clients/AuthRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Clients/AuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "E-mail or password invalid"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/clients": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Create a client",
+                "description": "Create a new client",
+                "security": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Clients/Create"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Clients already exists"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/clients/deliveries": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "List client deliveries",
+                "description": "List all client deliveries",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Clients/Deliveries"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Clients": {
+            "AuthRequest": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "username": "new_user",
+                    "password": "secret_password"
+                }
+            },
+            "AuthResponse": {
+                "type": "object",
+                "properties": {
+                    "token": "string"
+                },
+                "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDM5ODg3NTMsImV4cCI6MTY0NDA3NTE1Mywic3ViIjoiYzdjYjUyMWMtZTMwYS00MTQzLTk2MWMtNWJhYTNmMDQyN2ExIn0.WrvqAIeDbUMTJCN4zCGhccfF0_ReTai0E_m6uPJ2-04"
+                }
+            },
+            "Create": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "username": "new_user",
+                    "password": "secret_password"
+                }
+            },
+            "Deliveries": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "deliveries": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "id_client": {
+                                    "type": "string"
+                                },
+                                "id_deliveryman": {
+                                    "type": "string"
+                                },
+                                "item_name": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "string"
+                                },
+                                "end_at": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "example": {
+                    "id": "9f678690-43e9-4c7a-9957-028554fb4b55",
+                    "username": "test",
+                    "deliveries": [
+                        {
+                            "id": "c3d06952-045b-46b4-baad-7999ce8b15a6",
+                            "id_client": "9f678690-43e9-4c7a-9957-028554fb4b55",
+                            "id_deliveryman": null,
+                            "item_name": "test",
+                            "created_at": "2022-11-11T14:51:57.763Z",
+                            "end_at": null
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
