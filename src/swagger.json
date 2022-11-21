@@ -117,10 +117,198 @@
                     }
                 }
             }
+        },
+        "/deliveryman/auth": {
+            "post": {
+                "tags": [
+                    "Deliveryman"
+                ],
+                "summary": "Authenticate deliveryman",
+                "description": "Authenticate an deliveryman",
+                "security": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Deliveryman/AuthRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Deliveryman/AuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Username or password invalid"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/deliveryman": {
+            "post": {
+                "tags": [
+                    "Deliveryman"
+                ],
+                "summary": "Create a deliveryman",
+                "description": "Create a new deliveryman",
+                "security": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Deliveryman/Create"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Deliveryman already exists"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/deliveryman/deliveries": {
+            "get": {
+                "tags": [
+                    "Deliveryman"
+                ],
+                "summary": "List deliveryman deliveries",
+                "description": "List all deliveryman deliveries",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Deliveryman/Deliveries"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "Clients": {
+            "AuthRequest": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "username": "new_user",
+                    "password": "secret_password"
+                }
+            },
+            "AuthResponse": {
+                "type": "object",
+                "properties": {
+                    "token": "string"
+                },
+                "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDM5ODg3NTMsImV4cCI6MTY0NDA3NTE1Mywic3ViIjoiYzdjYjUyMWMtZTMwYS00MTQzLTk2MWMtNWJhYTNmMDQyN2ExIn0.WrvqAIeDbUMTJCN4zCGhccfF0_ReTai0E_m6uPJ2-04"
+                }
+            },
+            "Create": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "username": "new_user",
+                    "password": "secret_password"
+                }
+            },
+            "Deliveries": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "deliveries": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "id_client": {
+                                    "type": "string"
+                                },
+                                "id_deliveryman": {
+                                    "type": "string"
+                                },
+                                "item_name": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "string"
+                                },
+                                "end_at": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "example": {
+                    "id": "9f678690-43e9-4c7a-9957-028554fb4b55",
+                    "username": "test",
+                    "deliveries": [
+                        {
+                            "id": "c3d06952-045b-46b4-baad-7999ce8b15a6",
+                            "id_client": "9f678690-43e9-4c7a-9957-028554fb4b55",
+                            "id_deliveryman": null,
+                            "item_name": "test",
+                            "created_at": "2022-11-11T14:51:57.763Z",
+                            "end_at": null
+                        }
+                    ]
+                }
+            }
+        },
+        "Deliveryman": {
             "AuthRequest": {
                 "type": "object",
                 "properties": {
