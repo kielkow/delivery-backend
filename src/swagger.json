@@ -213,6 +213,115 @@
                     }
                 }
             }
+        },
+        "/deliveries": {
+            "post": {
+                "tags": [
+                    "Deliveries"
+                ],
+                "summary": "Create delivery",
+                "description": "Create a new delivery",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Deliveries/Create"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Token invalid"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/deliveries/available": {
+            "get": {
+                "tags": [
+                    "Deliveries"
+                ],
+                "summary": "List available deliveries to deliveryman",
+                "description": "List all available deliveries to deliveryman",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Deliveries/Available"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Token invalid"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/deliveries/updateDeliveryman/{id_delivery}": {
+            "put": {
+                "tags": [
+                    "Deliveries"
+                ],
+                "summary": "Update deliveryman from delivery",
+                "description": "Update deliveryman from an delivery",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id_delivery",
+                        "description": "ID delivery",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Deliveries/UpdateDeliveryman"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Token invalid"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -397,6 +506,86 @@
                             "end_at": null
                         }
                     ]
+                }
+            }
+        },
+        "Deliveries": {
+            "Create": {
+                "type": "object",
+                "properties": {
+                    "item_name": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "item_name": "new_item"
+                }
+            },
+            "Available": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "id_client": {
+                            "type": "string"
+                        },
+                        "id_deliveryman": {
+                            "type": "string"
+                        },
+                        "item_name": {
+                            "type": "string"
+                        },
+                        "created_at": {
+                            "type": "string"
+                        },
+                        "end_at": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "example": [
+                    {
+                        "id": "c3d06952-045b-46b4-baad-7999ce8b15a6",
+                        "id_client": "9f678690-43e9-4c7a-9957-028554fb4b55",
+                        "id_deliveryman": null,
+                        "item_name": "test",
+                        "created_at": "2022-11-11T14:51:57.763Z",
+                        "end_at": null
+                    }
+                ]
+            },
+            "UpdateDeliveryman": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "id_client": {
+                        "type": "string"
+                    },
+                    "id_deliveryman": {
+                        "type": "string"
+                    },
+                    "item_name": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "end_at": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": "c3d06952-045b-46b4-baad-7999ce8b15a6",
+                    "id_client": "9f678690-43e9-4c7a-9957-028554fb4b55",
+                    "id_deliveryman": "11cb0d3c-6970-4f06-b440-ae335cdae88b",
+                    "item_name": "test",
+                    "created_at": "2022-11-11T14:51:57.763Z",
+                    "end_at": null
                 }
             }
         }
